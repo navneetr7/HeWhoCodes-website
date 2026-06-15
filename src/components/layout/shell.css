@@ -53,6 +53,10 @@
   border-top: 1px solid var(--border-subtle);
 }
 
+.shell-footer__bar {
+  padding-inline: 1.25rem;
+}
+
 .shell-divider {
   height: 1.25rem;
   width: 1px;
