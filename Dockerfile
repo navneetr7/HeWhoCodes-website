@@ -10,11 +10,10 @@ RUN corepack enable \
 
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/package.json ./package.json
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN corepack enable \
-  && corepack prepare pnpm@9.15.9 --activate \
-  && pnpm build
+RUN npm run build
 
 FROM base AS runner
 ENV NODE_ENV=production
