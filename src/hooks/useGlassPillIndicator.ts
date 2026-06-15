@@ -17,7 +17,9 @@ function measureItem(nav: HTMLElement, index: number) {
 
   return {
     left: itemRect.left - navRect.left,
+    top: itemRect.top - navRect.top,
     width: itemRect.width,
+    height: itemRect.height,
   };
 }
 
@@ -37,7 +39,7 @@ export function useGlassPillIndicator() {
     getServerReducedMotionPreference,
   );
 
-  const moveTo = useCallback((index: number) => {
+  const moveTo = useCallback((index: number, options?: { instant?: boolean }) => {
     const nav = navRef.current;
     if (!nav) return;
 
@@ -47,7 +49,7 @@ export function useGlassPillIndicator() {
     const isFirstShow = activeIndexRef.current === null;
     activeIndexRef.current = index;
     setActiveLink(nav, index);
-    indicatorRef.current?.moveTo(metrics, { first: isFirstShow });
+    indicatorRef.current?.moveTo(metrics, { first: isFirstShow, instant: options?.instant });
   }, []);
 
   const hide = useCallback(() => {

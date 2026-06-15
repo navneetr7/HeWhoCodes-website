@@ -9,7 +9,9 @@ import "./glass-pill.css";
 
 export type GlassPillMetrics = {
   left: number;
+  top: number;
   width: number;
+  height: number;
 };
 
 export type GlassPillIndicatorHandle = {
@@ -26,7 +28,9 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
   function GlassPillIndicator({ reducedMotion, className }, ref) {
     const trackRef = useRef<HTMLSpanElement>(null);
     const x = useMotionValue(0);
+    const y = useMotionValue(0);
     const width = useMotionValue(0);
+    const height = useMotionValue(0);
     const scaleX = useMotionValue(1);
     const opacity = useMotionValue(0);
     const animControlsRef = useRef<AnimationPlaybackControls[]>([]);
@@ -43,10 +47,12 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
     const applyLayout = useCallback(
       (metrics: GlassPillMetrics) => {
         width.set(metrics.width);
+        height.set(metrics.height);
         x.set(metrics.left);
+        y.set(metrics.top);
         scaleX.set(1);
       },
-      [scaleX, width, x],
+      [height, scaleX, width, x, y],
     );
 
     useImperativeHandle(
@@ -77,10 +83,12 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
             metrics.width > 0 ? Math.max(currentVisualWidth / metrics.width, 0.01) : 1;
 
           width.set(metrics.width);
+          height.set(metrics.height);
           scaleX.set(nextScaleX);
 
           animControlsRef.current = [
             animate(x, metrics.left, glassPillSpringTransition),
+            animate(y, metrics.top, glassPillSpringTransition),
             animate(scaleX, 1, glassPillSpringTransition),
           ];
         },
@@ -96,7 +104,7 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
           animControlsRef.current = [animate(opacity, 0, glassPillOpacityTransition)];
         },
       }),
-      [applyLayout, opacity, reducedMotion, scaleX, width, x],
+      [applyLayout, height, opacity, reducedMotion, scaleX, width, x, y],
     );
 
     return (
@@ -107,7 +115,9 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
         data-visible="false"
         style={{
           x,
+          y,
           width,
+          height,
           scaleX,
           opacity,
           originX: 0,
