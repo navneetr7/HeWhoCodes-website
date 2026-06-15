@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+.github
+*.md
+.env*
+!.env.example
+Dockerfile
+docker-compose.yml
+scripts/server/setup.sh
+scripts/server/deploy.sh
+ecosystem.config.cjs

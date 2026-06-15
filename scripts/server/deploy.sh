@@ -1,25 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_DIR="/var/www/hewhocodes"
-
-if [[ ! -d "${APP_DIR}/.git" ]]; then
-  echo "App not installed. Run scripts/server/setup.sh first."
-  exit 1
-fi
-
-echo "==> Pulling latest main"
-git -C "${APP_DIR}" fetch origin main
-git -C "${APP_DIR}" reset --hard origin/main
-
-echo "==> Installing dependencies"
-cd "${APP_DIR}"
-pnpm install --frozen-lockfile 2>/dev/null || pnpm install
-
-echo "==> Building"
-pnpm build
-
-echo "==> Restarting app"
-pm2 restart hewhocodes
-
-echo "Deploy complete."
+echo "Deployments are handled by GitHub Actions:"
+echo "  push to main              -> staging.hewhocodes.com"
+echo "  push tag v1.0.0 (etc.)    -> hewhocodes.com"
+echo
+echo "Manual server pull (emergency only):"
+echo "  cd /opt/hewhocodes"
+echo "  docker compose --profile staging pull staging && docker compose --profile staging up -d staging"
+echo "  docker compose --profile production pull production && docker compose --profile production up -d production"
