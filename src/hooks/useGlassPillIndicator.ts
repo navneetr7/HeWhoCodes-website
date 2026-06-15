@@ -151,9 +151,54 @@ function measureFromPointer(nav: HTMLElement, clientX: number, clientY: number) 
   return { metrics: metricsList[closestIndex], activeIndex: closestIndex };
 }
 
-function setActiveLink(nav: HTMLElement, index: number | null) {
-  nav.querySelectorAll<HTMLElement>(".glass-clear-pill-link").forEach((link, linkIndex) => {
-    link.classList.toggle("glass-clear-pill-link--active", index !== null && linkIndex === index);
+function measureIndicator(nav: HTMLElement): PillMetrics | null {
+  const track = nav.querySelector<HTMLElement>(".glass-clear-pill-track");
+  if (!track || track.getAttribute("data-visible") !== "true") return null;
+
+  const navRect = nav.getBoundingClientRect();
+  const trackRect = track.getBoundingClientRect();
+
+  return {
+    left: trackRect.left - navRect.left,
+    top: trackRect.top - navRect.top,
+    width: trackRect.width,
+    height: trackRect.height,
+  };
+}
+
+function getLinkCover(pill: PillMetrics, link: PillMetrics) {
+  const overlapTop = Math.max(pill.top, link.top);
+  const overlapBottom = Math.min(pill.top + pill.height, link.top + link.height);
+  if (overlapBottom <= overlapTop + 0.5) return null;
+
+  const overlapLeft = Math.max(pill.left, link.left);
+  const overlapRight = Math.min(pill.left + pill.width, link.left + link.width);
+  if (overlapRight <= overlapLeft + 0.5) return null;
+  if (link.width <= 0) return null;
+
+  return {
+    start: ((overlapLeft - link.left) / link.width) * 100,
+    end: ((overlapRight - link.left) / link.width) * 100,
+  };
+}
+
+function updateLinkCovers(nav: HTMLElement, pill: PillMetrics | null) {
+  getLinks(nav).forEach((link) => {
+    if (!pill) {
+      link.style.removeProperty("--pill-cover-start");
+      link.style.removeProperty("--pill-cover-end");
+      return;
+    }
+
+    const cover = getLinkCover(pill, measureLink(nav, link));
+    if (!cover) {
+      link.style.setProperty("--pill-cover-start", "0%");
+      link.style.setProperty("--pill-cover-end", "0%");
+      return;
+    }
+
+    link.style.setProperty("--pill-cover-start", `${cover.start}%`);
+    link.style.setProperty("--pill-cover-end", `${cover.end}%`);
   });
 }
 
@@ -169,25 +214,53 @@ export function useGlassPillIndicator() {
     y: number;
     instant?: boolean;
   } | null>(null);
+  const coverFrameRef = useRef<number | null>(null);
   const reducedMotion = useSyncExternalStore(
     subscribeToMotionPreference,
     getReducedMotionPreference,
     getServerReducedMotionPreference,
   );
 
-  const moveTo = useCallback((index: number, options?: { instant?: boolean }) => {
-    const nav = navRef.current;
-    if (!nav) return;
-
-    const metrics = measureItem(nav, index);
-    if (!metrics) return;
-
-    const isFirstShow = indicatorHiddenRef.current;
-    indicatorHiddenRef.current = false;
-    activeIndexRef.current = index;
-    setActiveLink(nav, index);
-    indicatorRef.current?.moveTo(metrics, { first: isFirstShow, instant: options?.instant });
+  const stopCoverSync = useCallback(() => {
+    if (coverFrameRef.current !== null) {
+      window.cancelAnimationFrame(coverFrameRef.current);
+      coverFrameRef.current = null;
+    }
   }, []);
+
+  const startCoverSync = useCallback(() => {
+    if (coverFrameRef.current !== null) return;
+
+    const loop = () => {
+      const nav = navRef.current;
+      if (!nav || indicatorHiddenRef.current) {
+        coverFrameRef.current = null;
+        return;
+      }
+
+      updateLinkCovers(nav, measureIndicator(nav));
+      coverFrameRef.current = window.requestAnimationFrame(loop);
+    };
+
+    coverFrameRef.current = window.requestAnimationFrame(loop);
+  }, []);
+
+  const moveTo = useCallback(
+    (index: number, options?: { instant?: boolean }) => {
+      const nav = navRef.current;
+      if (!nav) return;
+
+      const metrics = measureItem(nav, index);
+      if (!metrics) return;
+
+      const isFirstShow = indicatorHiddenRef.current;
+      indicatorHiddenRef.current = false;
+      activeIndexRef.current = index;
+      indicatorRef.current?.moveTo(metrics, { first: isFirstShow, instant: options?.instant });
+      startCoverSync();
+    },
+    [startCoverSync],
+  );
 
   const applyPointerPosition = useCallback(
     (clientX: number, clientY: number, options?: { instant?: boolean }) => {
@@ -200,14 +273,14 @@ export function useGlassPillIndicator() {
       const isFirstShow = indicatorHiddenRef.current;
       indicatorHiddenRef.current = false;
       activeIndexRef.current = result.activeIndex;
-      setActiveLink(nav, result.activeIndex);
       indicatorRef.current?.moveTo(result.metrics, {
         first: isFirstShow,
         instant: options?.instant,
         tracking: !isFirstShow && !options?.instant,
       });
+      startCoverSync();
     },
-    [],
+    [startCoverSync],
   );
 
   const moveToPointer = useCallback(
@@ -239,9 +312,10 @@ export function useGlassPillIndicator() {
       pointerFrameRef.current = null;
     }
 
-    if (nav) setActiveLink(nav, null);
+    stopCoverSync();
+    if (nav) updateLinkCovers(nav, null);
     indicatorRef.current?.hide();
-  }, []);
+  }, [stopCoverSync]);
 
   const syncIndicator = useCallback(() => {
     const nav = navRef.current;
@@ -253,8 +327,8 @@ export function useGlassPillIndicator() {
       if (!result) return;
 
       activeIndexRef.current = result.activeIndex;
-      setActiveLink(nav, result.activeIndex);
       indicatorRef.current?.moveTo(result.metrics, { tracking: true });
+      startCoverSync();
       return;
     }
 
@@ -265,7 +339,8 @@ export function useGlassPillIndicator() {
     if (!metrics) return;
 
     indicatorRef.current?.moveTo(metrics, { tracking: true });
-  }, []);
+    startCoverSync();
+  }, [startCoverSync]);
 
   useEffect(() => {
     let resizeFrame: number | null = null;
@@ -283,8 +358,9 @@ export function useGlassPillIndicator() {
       window.removeEventListener("resize", onResize);
       if (resizeFrame !== null) window.cancelAnimationFrame(resizeFrame);
       if (pointerFrameRef.current !== null) window.cancelAnimationFrame(pointerFrameRef.current);
+      stopCoverSync();
     };
-  }, [syncIndicator]);
+  }, [syncIndicator, stopCoverSync]);
 
   const setNavRef = useCallback(
     (node: HTMLElement | null) => {

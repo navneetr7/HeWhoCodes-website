@@ -93,26 +93,35 @@
   align-items: center;
   border-radius: var(--radius-pill);
   padding: var(--pill-link-padding-block) var(--pill-link-padding-inline);
-  color: color-mix(in srgb, var(--foreground) 66%, transparent);
   text-decoration: none;
   white-space: nowrap;
+  outline: none;
+}
+
+.glass-clear-pill-link__label {
+  position: relative;
+  display: inline-block;
+}
+
+.glass-clear-pill-link__text {
+  color: color-mix(in srgb, var(--foreground) 66%, transparent);
   transition: color var(--motion-color-duration) ease;
 }
 
-.glass-clear-pill-link:hover,
-.glass-clear-pill-link:focus-visible {
+.glass-clear-pill-link:hover .glass-clear-pill-link__text,
+.glass-clear-pill-link:focus-visible .glass-clear-pill-link__text {
   color: var(--foreground);
-  outline: none;
 }
 
-.glass-clear-pill-link--active,
-.glass-clear-pill-link--active:hover,
-.glass-clear-pill-link--active:focus-visible {
+.glass-clear-pill-link__text--covered {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
   color: color-mix(in srgb, var(--color-teal) 82%, var(--foreground));
-  outline: none;
-  transition:
-    color var(--motion-pill-text-duration) ease var(--motion-pill-text-delay),
-    outline-color 0s;
+  clip-path: inset(
+    0 calc(100% - var(--pill-cover-end, 0%)) 0 var(--pill-cover-start, 0%)
+  );
+  pointer-events: none;
 }
 
 .glass-clear-pill-cluster {

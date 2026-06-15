@@ -47,15 +47,24 @@ export function GlassPillNav({
     moveToPointer(clientX, clientY, { instant: instantIndicator });
   };
 
+  const renderLabel = (label: string) => (
+    <span className="glass-clear-pill-link__label">
+      <span className="glass-clear-pill-link__text">{label}</span>
+      <span aria-hidden className="glass-clear-pill-link__text glass-clear-pill-link__text--covered">
+        {label}
+      </span>
+    </span>
+  );
+
   const renderItem = (item: GlassPillItem, index: number, showSeparatorAfter: boolean) => (
     <Fragment key={`${item.href}-${item.label}`}>
       {isInternalRoute(item.href) ? (
         <Link {...linkProps(index)} href={item.href}>
-          {item.label}
+          {renderLabel(item.label)}
         </Link>
       ) : (
         <a {...linkProps(index)} href={item.href}>
-          {item.label}
+          {renderLabel(item.label)}
         </a>
       )}
       {separator && showSeparatorAfter ? (
