@@ -12,7 +12,9 @@ export function Header() {
         <MdKeyboardCommandKey aria-hidden className="size-3.5 shrink-0 text-accent sm:size-5" />
         <BrandScrambleLink />
         <span aria-hidden className="shell-divider shell-divider--compact" />
-        <NavGlassNav />
+        <div className="site-header__nav min-w-0">
+          <NavGlassNav />
+        </div>
       </GlassPanel>
     </header>
   );

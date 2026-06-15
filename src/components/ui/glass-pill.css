@@ -4,6 +4,27 @@
   overflow: visible;
 }
 
+.glass-clear-pill-nav--scrollable {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.glass-clear-pill-scroll {
+  max-width: 100%;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: visible;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+}
+
+.glass-clear-pill-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 .glass-clear-pill-track {
   position: absolute;
   top: 0;
@@ -93,10 +114,15 @@
     outline-color 0s;
 }
 
+.glass-clear-pill-cluster {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
 .glass-clear-pill-separator {
   padding-inline: 0.125rem;
   color: color-mix(in srgb, var(--foreground) 24%, transparent);
-  pointer-events: none;
+  pointer-events: auto;
   user-select: none;
 }
 
