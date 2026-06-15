@@ -90,15 +90,6 @@
   overflow: hidden;
 }
 
-@media (max-width: 639px) {
-  .site-header .glass-clear-pill-link:hover,
-  .site-header .glass-clear-pill-link:focus-visible,
-  .site-header .glass-clear-pill-link--active {
-    padding-block: 0.24rem;
-    padding-inline: 0.55rem;
-  }
-}
-
 @media (min-width: 640px) {
   .site-header {
     --pill-link-padding-block: 0.42rem;
