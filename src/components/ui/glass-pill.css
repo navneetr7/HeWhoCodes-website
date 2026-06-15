@@ -99,3 +99,9 @@
   pointer-events: none;
   user-select: none;
 }
+
+@media (max-width: 639px) {
+  .glass-clear-pill-separator {
+    padding-inline: 0.05rem;
+  }
+}

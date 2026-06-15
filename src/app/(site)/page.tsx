@@ -29,7 +29,7 @@ export default function Home() {
             Raikwar
           </h1>
 
-          <div className="mt-10 grid max-w-xl grid-cols-2 gap-8">
+          <div className="mt-10 grid max-w-xl grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
             <div>
               <p className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted-subtle)]">
                 Role
@@ -49,7 +49,7 @@ export default function Home() {
 
           <GlassPillNav
             aria-label="Profile links"
-            className="mt-10 flex-wrap font-mono text-xs font-bold uppercase tracking-[0.12em]"
+            className="mt-10 w-full flex-wrap font-mono text-xs font-bold uppercase tracking-[0.12em]"
             items={profileLinks}
             separator="/"
           />
@@ -61,7 +61,7 @@ export default function Home() {
           </p>
           <GlassPillNav
             aria-label="Stack preview"
-            className="mt-5 flex-wrap font-mono text-xs"
+            className="mt-5 w-full flex-wrap font-mono text-xs"
             instantIndicator
             items={stackPreviewLinks}
             separator="/"
