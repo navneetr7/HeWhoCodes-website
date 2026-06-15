@@ -4,7 +4,11 @@
 
 .brand-scramble-link {
   display: inline-block;
+  flex-shrink: 0;
   width: var(--brand-link-width);
+  min-width: var(--brand-link-width);
+  max-width: var(--brand-link-width);
+  overflow: hidden;
   white-space: nowrap;
   font-weight: 900;
   color: var(--foreground);

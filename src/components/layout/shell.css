@@ -76,20 +76,34 @@
 .site-header {
   --pill-link-padding-block: 0.2rem;
   --pill-link-padding-inline: 0.38rem;
-  --brand-link-width: 10ch;
+  --brand-link-width: 16ch;
+}
+
+.site-header__panel {
+  min-width: 0;
 }
 
 .site-header__nav {
   flex: 1 1 auto;
   min-width: 0;
   max-width: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 639px) {
+  .site-header .glass-clear-pill-link:hover,
+  .site-header .glass-clear-pill-link:focus-visible,
+  .site-header .glass-clear-pill-link--active {
+    padding-block: 0.24rem;
+    padding-inline: 0.55rem;
+  }
 }
 
 @media (min-width: 640px) {
   .site-header {
     --pill-link-padding-block: 0.42rem;
     --pill-link-padding-inline: 0.82rem;
-    --brand-link-width: 15ch;
+    --brand-link-width: 16ch;
   }
 }
 
