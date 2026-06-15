@@ -1,0 +1,18 @@
+services:
+  staging:
+    image: ghcr.io/navneetr7/hewhocodes-website:staging
+    container_name: hewhocodes-staging
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3001:3000"
+    profiles:
+      - staging
+
+  production:
+    image: ghcr.io/navneetr7/hewhocodes-website:production
+    container_name: hewhocodes-production
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    profiles:
+      - production
