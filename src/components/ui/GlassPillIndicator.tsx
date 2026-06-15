@@ -78,6 +78,10 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
             return;
           }
 
+          if (opacity.get() < 1) {
+            opacity.set(1);
+          }
+
           const currentVisualWidth = width.get() * scaleX.get();
           const nextScaleX =
             metrics.width > 0 ? Math.max(currentVisualWidth / metrics.width, 0.01) : 1;

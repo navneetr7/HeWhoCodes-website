@@ -75,6 +75,12 @@
   --brand-link-width: 10ch;
 }
 
+.site-header__nav {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
 @media (min-width: 640px) {
   .site-header {
     --pill-link-padding-block: 0.42rem;
