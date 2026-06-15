@@ -3,9 +3,8 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 FROM base AS deps
-COPY package.json pnpm-lock.yaml ./
-RUN corepack enable pnpm \
-  && pnpm install --frozen-lockfile --config.confirmModulesPnpm=false
+COPY package.json pnpm-lock.yaml .npmrc ./
+RUN corepack enable pnpm && pnpm install --frozen-lockfile
 
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
