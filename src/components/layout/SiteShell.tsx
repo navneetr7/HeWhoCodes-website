@@ -10,7 +10,8 @@ type SiteShellProps = {
 
 export function SiteShell({ children, className }: SiteShellProps) {
   return (
-    <div className={cn("min-h-screen text-foreground", className)}>
+    <div className={cn("site-shell min-h-screen text-foreground", className)}>
+      <div aria-hidden className="site-shell__atmosphere" />
       <Header />
       {children}
       <Footer />

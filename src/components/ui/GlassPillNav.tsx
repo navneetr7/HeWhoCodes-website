@@ -15,6 +15,7 @@ export type GlassPillItem = {
 type GlassPillNavProps = {
   items: GlassPillItem[];
   className?: string;
+  instantIndicator?: boolean;
   separator?: string;
   "aria-label"?: string;
 };
@@ -26,6 +27,7 @@ function isInternalRoute(href: string) {
 export function GlassPillNav({
   items,
   className,
+  instantIndicator = false,
   separator,
   "aria-label": ariaLabel,
 }: GlassPillNavProps) {
@@ -33,8 +35,8 @@ export function GlassPillNav({
 
   const linkProps = (index: number) => ({
     className: "glass-clear-pill-link",
-    onFocus: () => moveTo(index),
-    onMouseEnter: () => moveTo(index),
+    onFocus: () => moveTo(index, { instant: instantIndicator }),
+    onMouseEnter: () => moveTo(index, { instant: instantIndicator }),
   });
 
   return (

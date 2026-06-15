@@ -3,8 +3,8 @@ export const loaderHoldAt100Ms = 500;
 export const loaderFadeOutMs = 500;
 export const scrambleStepMs = 58;
 
-export const glassPillSpringVisualDurationSec = 0.52;
-export const glassPillSpringBounce = 0.34;
+export const glassPillSpringVisualDurationSec = 0.2;
+export const glassPillSpringBounce = 0.16;
 export const glassPillOpacityFadeSec = 0.16;
 export const glassPillSpringTransition = {
   type: "spring" as const,
