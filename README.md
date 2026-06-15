@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HeWhoCodes Website
 
-## Getting Started
+Personal website for [HeWhoCodes](https://hewhocodes.com) — a portfolio and storefront for indie apps built by Navneet Raikwar.
 
-First, run the development server:
+The site is designed around a dark, glass-forward UI: a first-visit loader, clear-glass navigation, legal pages, and room to grow into a full app catalog and store.
+
+## Stack
+
+- **Next.js 16** (App Router)
+- **React 19**
+- **TypeScript**
+- **Tailwind CSS 4**
+- **Motion** (nav pill animation)
+- **pnpm**
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Other commands:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm lint
+pnpm build
+pnpm start
+```
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/                    # Routing and page composition
+│   ├── layout.tsx          # Root layout, fonts, global styles
+│   ├── globals.css         # Design tokens and theme variables
+│   └── (site)/             # Public site routes
+│       ├── layout.tsx      # Shared SiteShell wrapper
+│       ├── page.tsx        # Home
+│       ├── privacy/
+│       └── terms/
+├── components/
+│   ├── brand/              # Loader and first-visit experience
+│   ├── layout/             # Header, footer, SiteShell
+│   └── ui/                 # Reusable UI (glass nav, panels, scramble text)
+├── features/
+│   └── legal/              # Privacy and terms page content + layout
+├── data/                   # Static site copy (nav, legal, metadata inputs)
+├── hooks/                  # Client hooks (pill indicator, scramble text)
+├── lib/                    # Framework-agnostic helpers and motion constants
+└── types/                  # Shared TypeScript declarations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+public/                     # Static assets
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### How folders are used
 
-## Deploy on Vercel
+| Folder | Responsibility |
+|--------|----------------|
+| `app/` | Routes, layouts, and page entry points |
+| `components/` | Reusable UI and layout primitives |
+| `features/` | Domain-specific sections (legal today; apps/store later) |
+| `data/` | Static content until CMS/Supabase is connected |
+| `lib/` | Helpers, metadata, motion tokens, session utilities |
+| `hooks/` | Client-side interaction logic |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Local-only files (not in git): `docs/`, `references/`, `AGENTS.md`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Site sections
+
+- **About** — intro and background
+- **Apps** — indie projects and work
+- **Store** — purchase/download flow for HeWhoCodes apps
+- **Contact** — reach out
+- **Legal** — `/privacy`, `/terms`
+
+Home content and store flows are still being built; navigation and shell are in place.
+
+## License
+
+Private project. All rights reserved.
