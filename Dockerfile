@@ -4,7 +4,8 @@ WORKDIR /app
 
 FROM base AS deps
 COPY package.json pnpm-lock.yaml ./
-RUN corepack enable pnpm && pnpm install --frozen-lockfile
+RUN corepack enable pnpm \
+  && pnpm install --frozen-lockfile --config.confirmModulesPnpm=false
 
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
