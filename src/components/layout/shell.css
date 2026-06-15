@@ -59,6 +59,30 @@
   background: var(--border-divider);
 }
 
+.shell-divider--compact {
+  height: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .shell-divider--compact {
+    height: 1.25rem;
+  }
+}
+
+.site-header {
+  --pill-link-padding-block: 0.2rem;
+  --pill-link-padding-inline: 0.38rem;
+  --brand-link-width: 10ch;
+}
+
+@media (min-width: 640px) {
+  .site-header {
+    --pill-link-padding-block: 0.42rem;
+    --pill-link-padding-inline: 0.82rem;
+    --brand-link-width: 15ch;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-shell__atmosphere {
     animation: none;
