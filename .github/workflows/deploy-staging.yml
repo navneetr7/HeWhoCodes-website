@@ -53,6 +53,14 @@ jobs:
             set -euo pipefail
             echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             cd /opt/hewhocodes
-            docker compose --profile staging pull staging
-            docker compose --profile staging up -d staging
+            PROFILE=staging
+            SERVICE=staging
+            IMAGE=ghcr.io/navneetr7/hewhocodes-website:staging
+            docker compose --profile "${PROFILE}" stop "${SERVICE}" || true
+            if ! docker compose --profile "${PROFILE}" pull "${SERVICE}"; then
+              docker image rm "${IMAGE}" -f || true
+              docker system prune -af
+              docker compose --profile "${PROFILE}" pull "${SERVICE}"
+            fi
+            docker compose --profile "${PROFILE}" up -d "${SERVICE}"
             docker image prune -f
