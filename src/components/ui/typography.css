@@ -1,0 +1,16 @@
+.text-accent {
+  color: var(--color-teal);
+}
+
+.brand-scramble-link {
+  display: inline-block;
+  width: var(--brand-link-width);
+  white-space: nowrap;
+  font-weight: 900;
+  color: var(--foreground);
+  transition: color var(--motion-color-duration) ease;
+}
+
+.brand-scramble-link:hover {
+  color: var(--color-teal);
+}

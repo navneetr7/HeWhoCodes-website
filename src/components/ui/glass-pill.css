@@ -1,0 +1,103 @@
+.glass-clear-pill-nav {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+}
+
+.glass-clear-pill-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  pointer-events: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.glass-clear-pill-surface {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: transparent;
+}
+
+.glass-clear-pill-surface::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(110% 70% at 12% 0%, var(--glass-pill-sheen-strong), transparent 42%),
+    linear-gradient(180deg, var(--glass-pill-sheen-soft), transparent 72%);
+  opacity: var(--glass-pill-surface-opacity-rest);
+  content: "";
+}
+
+.glass-clear-pill-surface::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--glass-clear-border-soft);
+  border-radius: inherit;
+  opacity: 0.85;
+  content: "";
+  box-shadow:
+    inset 0 1px 0 var(--glass-clear-highlight),
+    inset 0 -1px 0 var(--glass-pill-inset-soft);
+}
+
+.glass-clear-pill-track[data-visible="true"] .glass-clear-pill-surface::before {
+  opacity: var(--glass-pill-surface-opacity-active);
+}
+
+.glass-clear-pill-track[data-visible="true"] .glass-clear-pill-surface::after {
+  border-color: var(--glass-clear-border);
+  opacity: 1;
+  box-shadow:
+    inset 0 1px 0 var(--glass-clear-highlight),
+    inset 0 -1px 0 var(--glass-pill-inset-strong),
+    var(--shadow-pill-drop);
+}
+
+.glass-clear-pill-link {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  padding: var(--pill-link-padding-block) var(--pill-link-padding-inline);
+  color: color-mix(in srgb, var(--foreground) 66%, transparent);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--motion-color-duration) ease;
+}
+
+.glass-clear-pill-link:hover,
+.glass-clear-pill-link:focus-visible {
+  color: var(--foreground);
+  outline: none;
+}
+
+.glass-clear-pill-link--active,
+.glass-clear-pill-link--active:hover,
+.glass-clear-pill-link--active:focus-visible {
+  color: var(--color-teal);
+  outline: none;
+  transition:
+    color var(--motion-pill-text-duration) ease var(--motion-pill-text-delay),
+    outline-color 0s;
+}
+
+.glass-clear-pill-separator {
+  padding-inline: 0.125rem;
+  color: color-mix(in srgb, var(--foreground) 24%, transparent);
+  pointer-events: none;
+  user-select: none;
+}

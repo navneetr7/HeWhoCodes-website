@@ -1,0 +1,160 @@
+.loader-atmosphere {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 70% at 8% 12%, color-mix(in srgb, var(--color-teal) 42%, transparent), transparent 58%),
+    radial-gradient(ellipse 75% 55% at 92% 8%, color-mix(in srgb, var(--color-teal-dark) 88%, transparent), transparent 52%),
+    radial-gradient(ellipse 120% 90% at 50% 108%, color-mix(in srgb, var(--color-teal) 14%, transparent), transparent 62%),
+    conic-gradient(
+      from 210deg at 50% 40%,
+      color-mix(in srgb, var(--color-teal) 7%, transparent),
+      transparent 28%,
+      color-mix(in srgb, var(--color-teal-dark) 12%, transparent) 52%,
+      transparent 78%
+    ),
+    linear-gradient(155deg, var(--color-graphite) 0%, var(--background) 42%, var(--color-ink) 100%);
+}
+
+.loader-background {
+  --loader-grid-size: 3rem;
+  --loader-dot-size: 1.375rem;
+}
+
+.loader-background::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--foreground) 4.5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--foreground) 4.5%, transparent) 1px, transparent 1px);
+  background-size: var(--loader-grid-size) var(--loader-grid-size);
+  -webkit-mask-image: radial-gradient(ellipse 95% 85% at 50% 46%, #000 18%, transparent 72%);
+  mask-image: radial-gradient(ellipse 95% 85% at 50% 46%, #000 18%, transparent 72%);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.loader-background::after {
+  position: absolute;
+  inset: -15%;
+  content: "";
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--color-teal) 22%, transparent) 0.6px, transparent 0.7px);
+  background-size: var(--loader-dot-size) var(--loader-dot-size);
+  -webkit-mask-image:
+    radial-gradient(ellipse 80% 70% at 50% 50%, #000 10%, transparent 70%),
+    linear-gradient(180deg, transparent, #000 24%, #000 76%, transparent);
+  mask-image:
+    radial-gradient(ellipse 80% 70% at 50% 50%, #000 10%, transparent 70%),
+    linear-gradient(180deg, transparent, #000 24%, #000 76%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  opacity: 0.45;
+  animation: loader-bg-drift 28s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes loader-bg-drift {
+  from {
+    transform: translate3d(-1.5%, -1%, 0) scale(1);
+  }
+
+  to {
+    transform: translate3d(1.5%, 1%, 0) scale(1.03);
+  }
+}
+
+.loader-blob {
+  --loader-blob-size: clamp(12rem, 31vmin, 22rem);
+
+  position: absolute;
+  z-index: 1;
+  right: -5%;
+  bottom: -8%;
+  width: var(--loader-blob-size);
+  height: calc(var(--loader-blob-size) * 0.9);
+  background:
+    radial-gradient(circle at 30% 26%, color-mix(in srgb, var(--color-ember) 34%, transparent), transparent 58%),
+    radial-gradient(circle at 72% 74%, color-mix(in srgb, var(--color-burnt-orange) 24%, transparent), transparent 60%),
+    color-mix(in srgb, var(--color-burnt-orange) 14%, transparent);
+  border-radius: 58% 42% 36% 64% / 56% 38% 62% 44%;
+  filter: blur(38px);
+  opacity: 0.52;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transform-origin: 100% 100%;
+}
+
+.loader-blob--live {
+  will-change: transform, border-radius;
+  animation:
+    loader-blob-morph 40s ease-in-out infinite alternate,
+    loader-blob-drift 54s ease-in-out infinite alternate;
+}
+
+@keyframes loader-blob-morph {
+  0% {
+    border-radius: 58% 42% 36% 64% / 56% 38% 62% 44%;
+  }
+
+  50% {
+    border-radius: 46% 54% 60% 40% / 52% 62% 38% 48%;
+  }
+
+  100% {
+    border-radius: 54% 46% 42% 58% / 48% 40% 56% 52%;
+  }
+}
+
+@keyframes loader-blob-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-1.2vw, -0.8vh, 0) scale(1.008);
+  }
+
+  100% {
+    transform: translate3d(0.6vw, -0.4vh, 0) scale(0.996);
+  }
+}
+
+.loader-frost {
+  z-index: 2;
+  overflow: hidden;
+  background:
+    linear-gradient(115deg, color-mix(in srgb, var(--foreground) 10%, transparent), color-mix(in srgb, var(--foreground) 2.5%, transparent) 42%, color-mix(in srgb, var(--foreground) 8%, transparent)),
+    linear-gradient(180deg, color-mix(in srgb, var(--foreground) 7%, transparent), color-mix(in srgb, var(--foreground) 1.5%, transparent));
+  -webkit-backdrop-filter: blur(var(--loader-frost-blur)) saturate(1.12);
+  backdrop-filter: blur(var(--loader-frost-blur)) saturate(1.12);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--foreground) 18%, transparent),
+    inset 0 -1px 0 var(--color-teal-soft);
+}
+
+.loader-frost::before {
+  display: none;
+}
+
+.loader-progress {
+  position: absolute;
+  z-index: 10;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: clamp(4rem, 14vw, 10rem);
+  font-weight: 900;
+  line-height: 1;
+  text-shadow: 0 0 34px color-mix(in srgb, var(--color-teal) 28%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-background::after,
+  .loader-blob--live {
+    animation: none;
+  }
+}

@@ -1,0 +1,9 @@
+.shell-footer {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.shell-divider {
+  height: 1.25rem;
+  width: 1px;
+  background: var(--border-divider);
+}
