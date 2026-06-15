@@ -3,7 +3,11 @@
 import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
 import type { AnimationPlaybackControls } from "motion/react";
 import { animate, motion, useMotionValue } from "motion/react";
-import { glassPillOpacityTransition, glassPillSpringTransition } from "@/lib/motion";
+import {
+  glassPillOpacityTransition,
+  glassPillSpringTransition,
+  glassPillTrackingTransition,
+} from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import "./glass-pill.css";
 
@@ -14,8 +18,14 @@ export type GlassPillMetrics = {
   height: number;
 };
 
+export type GlassPillMoveOptions = {
+  first?: boolean;
+  instant?: boolean;
+  tracking?: boolean;
+};
+
 export type GlassPillIndicatorHandle = {
-  moveTo: (metrics: GlassPillMetrics, options?: { first?: boolean; instant?: boolean }) => void;
+  moveTo: (metrics: GlassPillMetrics, options?: GlassPillMoveOptions) => void;
   hide: () => void;
 };
 
@@ -33,11 +43,22 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
     const height = useMotionValue(0);
     const scaleX = useMotionValue(1);
     const opacity = useMotionValue(0);
-    const animControlsRef = useRef<AnimationPlaybackControls[]>([]);
+    const layoutControlsRef = useRef<AnimationPlaybackControls[]>([]);
+    const opacityControlRef = useRef<AnimationPlaybackControls | null>(null);
+
+    const stopLayoutAnimations = () => {
+      layoutControlsRef.current.forEach((control) => control.stop());
+      layoutControlsRef.current = [];
+    };
+
+    const stopOpacityAnimation = () => {
+      opacityControlRef.current?.stop();
+      opacityControlRef.current = null;
+    };
 
     const stopAnimations = () => {
-      animControlsRef.current.forEach((control) => control.stop());
-      animControlsRef.current = [];
+      stopLayoutAnimations();
+      stopOpacityAnimation();
     };
 
     const setVisible = (visible: boolean) => {
@@ -55,26 +76,43 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
       [height, scaleX, width, x, y],
     );
 
+    const animateLayout = useCallback(
+      (metrics: GlassPillMetrics, options?: GlassPillMoveOptions) => {
+        const spring = options?.tracking ? glassPillTrackingTransition : glassPillSpringTransition;
+
+        if (!options?.tracking) {
+          stopLayoutAnimations();
+        }
+
+        scaleX.set(1);
+        layoutControlsRef.current = [
+          animate(x, metrics.left, spring),
+          animate(y, metrics.top, spring),
+          animate(width, metrics.width, spring),
+          animate(height, metrics.height, spring),
+        ];
+      },
+      [height, scaleX, width, x, y],
+    );
+
     useImperativeHandle(
       ref,
       () => ({
         moveTo(metrics, options) {
-          stopAnimations();
           setVisible(true);
 
           if (reducedMotion || options?.instant) {
+            stopAnimations();
             applyLayout(metrics);
             opacity.set(1);
             return;
           }
 
           if (options?.first) {
+            stopAnimations();
             applyLayout(metrics);
             opacity.set(0);
-            animControlsRef.current = [
-              animate(opacity, 1, glassPillOpacityTransition),
-              animate(scaleX, 1, glassPillSpringTransition),
-            ];
+            opacityControlRef.current = animate(opacity, 1, glassPillOpacityTransition);
             return;
           }
 
@@ -82,19 +120,7 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
             opacity.set(1);
           }
 
-          const currentVisualWidth = width.get() * scaleX.get();
-          const nextScaleX =
-            metrics.width > 0 ? Math.max(currentVisualWidth / metrics.width, 0.01) : 1;
-
-          width.set(metrics.width);
-          height.set(metrics.height);
-          scaleX.set(nextScaleX);
-
-          animControlsRef.current = [
-            animate(x, metrics.left, glassPillSpringTransition),
-            animate(y, metrics.top, glassPillSpringTransition),
-            animate(scaleX, 1, glassPillSpringTransition),
-          ];
+          animateLayout(metrics, options);
         },
         hide() {
           stopAnimations();
@@ -105,10 +131,10 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
             return;
           }
 
-          animControlsRef.current = [animate(opacity, 0, glassPillOpacityTransition)];
+          opacityControlRef.current = animate(opacity, 0, glassPillOpacityTransition);
         },
       }),
-      [applyLayout, height, opacity, reducedMotion, scaleX, width, x, y],
+      [animateLayout, applyLayout, height, opacity, reducedMotion, scaleX, width, x, y],
     );
 
     return (
