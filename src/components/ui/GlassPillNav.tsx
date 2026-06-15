@@ -47,24 +47,15 @@ export function GlassPillNav({
     moveToPointer(clientX, clientY, { instant: instantIndicator });
   };
 
-  const renderLabel = (label: string) => (
-    <span className="glass-clear-pill-link__label">
-      <span className="glass-clear-pill-link__text">{label}</span>
-      <span aria-hidden className="glass-clear-pill-link__text glass-clear-pill-link__text--covered">
-        {label}
-      </span>
-    </span>
-  );
-
   const renderItem = (item: GlassPillItem, index: number, showSeparatorAfter: boolean) => (
     <Fragment key={`${item.href}-${item.label}`}>
       {isInternalRoute(item.href) ? (
         <Link {...linkProps(index)} href={item.href}>
-          {renderLabel(item.label)}
+          {item.label}
         </Link>
       ) : (
         <a {...linkProps(index)} href={item.href}>
-          {renderLabel(item.label)}
+          {item.label}
         </a>
       )}
       {separator && showSeparatorAfter ? (
@@ -95,6 +86,25 @@ export function GlassPillNav({
       items.map((item, index) => renderItem(item, index, index < items.length - 1))
     );
 
+  const layerClass = cn(
+    "glass-clear-pill-layer flex items-center gap-1",
+    scrollable ? "flex-nowrap w-max" : "min-w-0 w-full flex-wrap",
+  );
+
+  const stack = (
+    <div
+      className={cn(
+        "glass-clear-pill-stack",
+        scrollable ? "w-max min-w-0" : "w-full min-w-0 flex-1",
+      )}
+    >
+      <div className={cn(layerClass, "glass-clear-pill-layer--base")}>{links}</div>
+      <div aria-hidden className={cn(layerClass, "glass-clear-pill-layer--covered")}>
+        {links}
+      </div>
+    </div>
+  );
+
   return (
     <nav
       ref={setNavRef}
@@ -111,9 +121,9 @@ export function GlassPillNav({
       <GlassPillIndicator ref={indicatorRef} reducedMotion={reducedMotion} />
 
       {scrollable ? (
-        <div className="glass-clear-pill-scroll flex min-w-0 items-center gap-1">{links}</div>
+        <div className="glass-clear-pill-scroll flex min-w-0 flex-1">{stack}</div>
       ) : (
-        links
+        stack
       )}
     </nav>
   );

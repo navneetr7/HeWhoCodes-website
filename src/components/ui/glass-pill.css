@@ -25,6 +25,28 @@
   display: none;
 }
 
+.glass-clear-pill-stack {
+  position: relative;
+}
+
+.glass-clear-pill-layer--base {
+  position: relative;
+  z-index: 1;
+}
+
+.glass-clear-pill-layer--covered {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  pointer-events: none;
+  color: color-mix(in srgb, var(--color-teal) 82%, var(--foreground));
+  clip-path: xywh(
+    var(--pill-cover-left, 0px) var(--pill-cover-top, 0px) var(--pill-cover-width, 0px)
+      var(--pill-cover-height, 0px)
+  );
+}
+
 .glass-clear-pill-track {
   position: absolute;
   top: 0;
@@ -88,7 +110,6 @@
 
 .glass-clear-pill-link {
   position: relative;
-  z-index: 1;
   display: inline-flex;
   align-items: center;
   border-radius: var(--radius-pill);
@@ -98,30 +119,23 @@
   outline: none;
 }
 
-.glass-clear-pill-link__label {
-  position: relative;
-  display: inline-block;
-}
-
-.glass-clear-pill-link__text {
+.glass-clear-pill-layer--base .glass-clear-pill-link {
   color: color-mix(in srgb, var(--foreground) 66%, transparent);
   transition: color var(--motion-color-duration) ease;
 }
 
-.glass-clear-pill-link:hover .glass-clear-pill-link__text,
-.glass-clear-pill-link:focus-visible .glass-clear-pill-link__text {
+.glass-clear-pill-layer--base .glass-clear-pill-link:hover,
+.glass-clear-pill-layer--base .glass-clear-pill-link:focus-visible {
   color: var(--foreground);
 }
 
-.glass-clear-pill-link__text--covered {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  color: color-mix(in srgb, var(--color-teal) 82%, var(--foreground));
-  clip-path: inset(
-    0 calc(100% - var(--pill-cover-end, 0%)) 0 var(--pill-cover-start, 0%)
-  );
-  pointer-events: none;
+.glass-clear-pill-layer--base .glass-clear-pill-separator {
+  color: color-mix(in srgb, var(--foreground) 24%, transparent);
+}
+
+.glass-clear-pill-layer--covered .glass-clear-pill-link,
+.glass-clear-pill-layer--covered .glass-clear-pill-separator {
+  color: inherit;
 }
 
 .glass-clear-pill-cluster {
@@ -131,7 +145,6 @@
 
 .glass-clear-pill-separator {
   padding-inline: 0.125rem;
-  color: color-mix(in srgb, var(--foreground) 24%, transparent);
   pointer-events: auto;
   user-select: none;
 }

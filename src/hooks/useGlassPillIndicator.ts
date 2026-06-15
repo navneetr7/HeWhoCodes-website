@@ -166,40 +166,32 @@ function measureIndicator(nav: HTMLElement): PillMetrics | null {
   };
 }
 
-function getLinkCover(pill: PillMetrics, link: PillMetrics) {
-  const overlapTop = Math.max(pill.top, link.top);
-  const overlapBottom = Math.min(pill.top + pill.height, link.top + link.height);
-  if (overlapBottom <= overlapTop + 0.5) return null;
+function updateNavCover(nav: HTMLElement) {
+  const stack = nav.querySelector<HTMLElement>(".glass-clear-pill-stack");
+  if (!stack) return;
 
-  const overlapLeft = Math.max(pill.left, link.left);
-  const overlapRight = Math.min(pill.left + pill.width, link.left + link.width);
-  if (overlapRight <= overlapLeft + 0.5) return null;
-  if (link.width <= 0) return null;
+  const pill = measureIndicator(nav);
+  if (!pill || pill.width <= 0 || pill.height <= 0) {
+    stack.style.setProperty("--pill-cover-width", "0px");
+    stack.style.setProperty("--pill-cover-height", "0px");
+    return;
+  }
 
-  return {
-    start: ((overlapLeft - link.left) / link.width) * 100,
-    end: ((overlapRight - link.left) / link.width) * 100,
-  };
+  const navRect = nav.getBoundingClientRect();
+  const stackRect = stack.getBoundingClientRect();
+
+  stack.style.setProperty("--pill-cover-left", `${pill.left - (stackRect.left - navRect.left)}px`);
+  stack.style.setProperty("--pill-cover-top", `${pill.top - (stackRect.top - navRect.top)}px`);
+  stack.style.setProperty("--pill-cover-width", `${pill.width}px`);
+  stack.style.setProperty("--pill-cover-height", `${pill.height}px`);
 }
 
-function updateLinkCovers(nav: HTMLElement, pill: PillMetrics | null) {
-  getLinks(nav).forEach((link) => {
-    if (!pill) {
-      link.style.removeProperty("--pill-cover-start");
-      link.style.removeProperty("--pill-cover-end");
-      return;
-    }
+function clearNavCover(nav: HTMLElement) {
+  const stack = nav.querySelector<HTMLElement>(".glass-clear-pill-stack");
+  if (!stack) return;
 
-    const cover = getLinkCover(pill, measureLink(nav, link));
-    if (!cover) {
-      link.style.setProperty("--pill-cover-start", "0%");
-      link.style.setProperty("--pill-cover-end", "0%");
-      return;
-    }
-
-    link.style.setProperty("--pill-cover-start", `${cover.start}%`);
-    link.style.setProperty("--pill-cover-end", `${cover.end}%`);
-  });
+  stack.style.setProperty("--pill-cover-width", "0px");
+  stack.style.setProperty("--pill-cover-height", "0px");
 }
 
 export function useGlassPillIndicator() {
@@ -238,7 +230,7 @@ export function useGlassPillIndicator() {
         return;
       }
 
-      updateLinkCovers(nav, measureIndicator(nav));
+      updateNavCover(nav);
       coverFrameRef.current = window.requestAnimationFrame(loop);
     };
 
@@ -313,7 +305,7 @@ export function useGlassPillIndicator() {
     }
 
     stopCoverSync();
-    if (nav) updateLinkCovers(nav, null);
+    if (nav) clearNavCover(nav);
     indicatorRef.current?.hide();
   }, [stopCoverSync]);
 
