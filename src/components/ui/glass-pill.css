@@ -37,6 +37,7 @@
   transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
+  will-change: transform, width, height, opacity;
 }
 
 .glass-clear-pill-surface {
