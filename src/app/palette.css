@@ -1,0 +1,32 @@
+/* Page palette text utilities — plain CSS so dev/prod always match globals.css tokens */
+.text-alpine-oat {
+  color: var(--alpine-oat);
+}
+
+.text-burnt-orange {
+  color: var(--burnt-orange);
+}
+
+.text-lust {
+  color: var(--lust);
+}
+
+.text-black-pearl {
+  color: var(--black-pearl);
+}
+
+.text-blue-lagoon {
+  color: var(--blue-lagoon);
+}
+
+.text-copper {
+  color: var(--copper);
+}
+
+.text-banan-yellow {
+  color: var(--banan-yellow);
+}
+
+.text-electric-lime {
+  color: var(--electric-lime);
+}

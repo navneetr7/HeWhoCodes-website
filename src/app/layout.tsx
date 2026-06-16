@@ -2,6 +2,7 @@ import "@fontsource-variable/space-grotesk";
 import { SiteLoader } from "@/components/brand/SiteLoader";
 import { defaultSiteMetadata } from "@/lib/metadata";
 import "./globals.css";
+import "./palette.css";
 
 export const metadata = defaultSiteMetadata;
 

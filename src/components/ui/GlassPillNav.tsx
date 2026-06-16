@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Fragment, type FocusEvent } from "react";
 import { GlassPillIndicator } from "@/components/ui/GlassPillIndicator";
 import { useGlassPillIndicator } from "@/hooks/useGlassPillIndicator";
+import { isInternalHref, opensInNewTab } from "@/lib/routes";
 import { cn } from "@/lib/utils";
 import "./glass-pill.css";
 
@@ -21,10 +22,6 @@ type GlassPillNavProps = {
   tailCluster?: number;
   "aria-label"?: string;
 };
-
-function isInternalRoute(href: string) {
-  return href.startsWith("/") && !href.startsWith("//");
-}
 
 export function GlassPillNav({
   items,
@@ -55,12 +52,18 @@ export function GlassPillNav({
 
   const renderItem = (item: GlassPillItem, index: number, showSeparatorAfter: boolean) => (
     <Fragment key={`${item.href}-${item.label}`}>
-      {isInternalRoute(item.href) ? (
+      {isInternalHref(item.href) ? (
         <Link {...linkProps(index)} href={item.href}>
           {item.label}
         </Link>
       ) : (
-        <a {...linkProps(index)} href={item.href}>
+        <a
+          {...linkProps(index)}
+          href={item.href}
+          {...(opensInNewTab(item.href)
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : undefined)}
+        >
           {item.label}
         </a>
       )}
