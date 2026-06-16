@@ -7,7 +7,7 @@ on:
 
 concurrency:
   group: deploy-staging
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -44,23 +44,14 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Deploy to server
+        env:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          GHCR_USER: ${{ github.actor }}
+          DEPLOY_PROFILE: staging
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            set -euo pipefail
-            echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            cd /opt/hewhocodes
-            PROFILE=staging
-            SERVICE=staging
-            IMAGE=ghcr.io/navneetr7/hewhocodes-website:staging
-            docker compose --profile "${PROFILE}" stop "${SERVICE}" || true
-            if ! docker compose --profile "${PROFILE}" pull "${SERVICE}"; then
-              docker image rm "${IMAGE}" -f || true
-              docker system prune -af
-              docker compose --profile "${PROFILE}" pull "${SERVICE}"
-            fi
-            docker compose --profile "${PROFILE}" up -d "${SERVICE}"
-            docker image prune -f
+          envs: GHCR_TOKEN,GHCR_USER,DEPLOY_PROFILE
+          script_path: scripts/server/pull-and-up.sh
