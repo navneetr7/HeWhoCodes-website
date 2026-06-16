@@ -10,6 +10,8 @@ type ScrambleTextBaseProps = {
   hoverLabel: string;
   className?: string;
   stepMs?: number;
+  holdMs?: number;
+  leaveDelayMs?: number;
 };
 
 type ScrambleTextLinkProps = ScrambleTextBaseProps &
@@ -29,6 +31,8 @@ export function ScrambleText({
   hoverLabel,
   className,
   stepMs,
+  holdMs,
+  leaveDelayMs,
   href,
   ...props
 }: ScrambleTextProps) {
@@ -36,6 +40,8 @@ export function ScrambleText({
     defaultLabel,
     hoverLabel,
     stepMs,
+    holdMs,
+    leaveDelayMs,
   });
 
   const interactionHandlers = {
