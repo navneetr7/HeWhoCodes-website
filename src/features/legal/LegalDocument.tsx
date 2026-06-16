@@ -11,8 +11,8 @@ type LegalDocumentProps = {
 
 export function LegalDocument({ title, updated, sections }: LegalDocumentProps) {
   return (
-    <main>
-      <Section className="py-28 sm:py-32">
+    <main className="site-main">
+      <Section className="pb-20 sm:pb-32">
         <div className="mx-auto max-w-2xl">
           <GlassPillNav items={[{ label: "← Back home", href: "/" }]} />
 
