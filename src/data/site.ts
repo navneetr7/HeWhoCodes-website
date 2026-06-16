@@ -4,6 +4,7 @@ export const site = {
   domain: "hewhocodes.com",
   contactEmail: "hewhocodes@icloud.com",
   brandHoverName: "Navneet Raikwar",
+  contentUpdated: "2026-06-16",
 };
 
 export const navLinks = [

@@ -18,7 +18,6 @@ export const profileLinks = [
   { href: "https://www.linkedin.com/in/hewhocodes", label: "LinkedIn" },
   { href: "https://github.com/navneetr7", label: "GitHub" },
   { href: "mailto:hewhocodes@icloud.com", label: "Email" },
-  { href: "/resume.pdf", label: "Resume" },
 ] as const;
 
 export const stackPreviewLabel = "Stack preview";
