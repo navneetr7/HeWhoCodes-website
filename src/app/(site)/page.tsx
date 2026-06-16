@@ -1,13 +1,13 @@
 import { GlassPillNav } from "@/components/ui/GlassPillNav";
+import {
+  homeFocus,
+  homeIntro,
+  homeRole,
+  profileLinks,
+  stackPreviewLabel,
+} from "@/data/home";
 import { stackPreview } from "@/data/stack";
 import { StackSection } from "@/features/stack/StackSection";
-
-const profileLinks = [
-  { href: "https://www.linkedin.com/in/hewhocodes", label: "LinkedIn" },
-  { href: "https://github.com/navneetr7", label: "GitHub" },
-  { href: "mailto:hewhocodes@icloud.com", label: "Email" },
-  { href: "/resume.pdf", label: "Resume" },
-];
 
 const stackPreviewLinks = stackPreview.map((item) => ({
   href: "#stack",
@@ -19,46 +19,40 @@ export default function Home() {
     <main className="relative min-h-screen overflow-hidden pt-36">
       <section className="site-content-grid site-hero-grid mx-auto grid w-full max-w-7xl gap-12 px-5 pb-12 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
         <div className="min-w-0">
-          <p className="mb-5 max-w-2xl font-mono text-sm font-bold leading-6 text-[var(--text-muted-heading)]">
-            Engineering useful things.
-          </p>
+          <p className="page-eyebrow">{homeIntro.eyebrow}</p>
 
           <h1 className="max-w-4xl text-6xl font-black leading-none text-alpine-oat sm:text-8xl lg:text-9xl">
-            Navneet
+            {homeIntro.nameLines[0]}
             <br />
-            Raikwar
+            {homeIntro.nameLines[1]}
           </h1>
 
           <div className="mt-10 grid max-w-xl grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
             <div>
               <p className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted-subtle)]">
-                Role
+                {homeRole.label}
               </p>
-              <p className="mt-2 font-bold text-foreground">AI Engineer</p>
-              <p className="mt-1 font-mono text-xs text-[var(--text-muted-subtle)]">
-                IntegratingMe · 2018 - Present
-              </p>
+              <p className="mt-2 font-bold text-foreground">{homeRole.title}</p>
+              <p className="mt-1 font-mono text-xs text-[var(--text-muted-subtle)]">{homeRole.detail}</p>
             </div>
             <div>
               <p className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-[var(--text-muted-subtle)]">
-                Focus
+                {homeFocus.label}
               </p>
-              <p className="mt-2 font-bold text-foreground">Backend Systems · Intelligence · Automation</p>
+              <p className="mt-2 font-bold text-foreground">{homeFocus.title}</p>
             </div>
           </div>
 
           <GlassPillNav
             aria-label="Profile links"
             className="mt-10 flex w-full flex-wrap font-mono text-xs font-bold uppercase tracking-[0.12em]"
-            items={profileLinks}
+            items={[...profileLinks]}
             separator="/"
           />
         </div>
 
         <aside className="min-w-0 p-0">
-          <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-teal">
-            Stack preview
-          </p>
+          <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-teal">{stackPreviewLabel}</p>
           <GlassPillNav
             aria-label="Stack preview"
             className="mt-5 flex w-full flex-wrap font-mono text-xs"

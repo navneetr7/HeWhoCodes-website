@@ -2,7 +2,6 @@ import { BrandScrambleLink } from "@/components/ui/BrandScrambleLink";
 import { FrostedHeaderPanel } from "@/components/layout/FrostedHeaderPanel";
 import { NavGlassNav } from "@/components/ui/NavGlassNav";
 import { MdKeyboardCommandKey } from "react-icons/md";
-import "./shell.css";
 import "@/components/ui/typography.css";
 
 export function Header() {

@@ -11,35 +11,37 @@ type LegalDocumentProps = {
 
 export function LegalDocument({ title, updated, sections }: LegalDocumentProps) {
   return (
-    <Section className="py-28 sm:py-32">
-      <div className="mx-auto max-w-2xl">
-        <GlassPillNav items={[{ label: "← Back home", href: "/" }]} />
+    <main>
+      <Section className="py-28 sm:py-32">
+        <div className="mx-auto max-w-2xl">
+          <GlassPillNav items={[{ label: "← Back home", href: "/" }]} />
 
-        <header className="mt-8">
-          <h1 className="legal-document__title">{title}</h1>
-          <p className="legal-document__updated">Last updated {updated}</p>
-        </header>
+          <header className="mt-8">
+            <h1 className="legal-document__title">{title}</h1>
+            <p className="legal-document__updated">Last updated {updated}</p>
+          </header>
 
-        <div className="legal-document__sections">
-          {sections.map((section) => (
-            <section key={section.title}>
-              <h2 className="legal-document__section-title">{section.title}</h2>
-              <div className="legal-document__section-body">
-                {section.paragraphs.map((paragraph, index) => (
-                  <p key={`${section.title}-p-${index}`}>{paragraph}</p>
-                ))}
-                {section.list ? (
-                  <ul className="legal-document__list">
-                    {section.list.map((item, index) => (
-                      <li key={`${section.title}-li-${index}`}>{item}</li>
-                    ))}
-                  </ul>
-                ) : null}
-              </div>
-            </section>
-          ))}
+          <div className="legal-document__sections">
+            {sections.map((section) => (
+              <section key={section.title}>
+                <h2 className="legal-document__section-title">{section.title}</h2>
+                <div className="legal-document__section-body">
+                  {section.paragraphs.map((paragraph, index) => (
+                    <p key={`${section.title}-p-${index}`}>{paragraph}</p>
+                  ))}
+                  {section.list ? (
+                    <ul className="legal-document__list">
+                      {section.list.map((item, index) => (
+                        <li key={`${section.title}-li-${index}`}>{item}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              </section>
+            ))}
+          </div>
         </div>
-      </div>
-    </Section>
+      </Section>
+    </main>
   );
 }

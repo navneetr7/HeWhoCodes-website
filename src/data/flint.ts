@@ -1,9 +1,12 @@
-export const flintShowcase = {
+import type { AppShowcaseData } from "@/features/apps/types";
+
+export const flintShowcase: AppShowcaseData = {
   name: "Flint",
-  tagline: "Attention, made visible.",
+  subtitle: "Attention tracking for macOS",
   description:
     "Flint quietly tracks how you spend time across apps and turns it into a clear picture of focus, distraction, and recovery. No screenshots. No keylogging. No cloud. Everything stays on your device.",
-  requirements: "Requires macOS 12 or later",
+  category: "Focus & Time",
+  badges: ["macOS 12+", "On-device", "Private"],
   highlightsHeading: "At a glance",
   highlights: [
     "Understand where your attention goes",
@@ -12,5 +15,10 @@ export const flintShowcase = {
     "Build better habits through gentle nudges",
     "AI-powered insights with your own API key",
     "Private by design",
-  ] as const,
+  ],
+  previewAccent: "var(--burnt-orange)",
+  actions: {
+    primary: { label: "Coming soon", href: "#", disabled: true },
+    secondary: { label: "Learn more", href: "mailto:hewhocodes@icloud.com?subject=Flint" },
+  },
 };

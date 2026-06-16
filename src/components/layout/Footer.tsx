@@ -1,6 +1,5 @@
 import { footerLinks, site } from "@/data/site";
 import { GlassPillNav } from "@/components/ui/GlassPillNav";
-import "./shell.css";
 
 export function Footer() {
   const year = new Date().getFullYear();
