@@ -3,6 +3,11 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from "react";
 import type { AnimationPlaybackControls } from "motion/react";
 import { animate, motion, useMotionValue, useMotionValueEvent } from "motion/react";
+import type {
+  GlassPillIndicatorHandle,
+  GlassPillMetrics,
+  GlassPillMoveOptions,
+} from "@/lib/glassPill";
 import {
   glassPillOpacityTransition,
   glassPillSpringTransition,
@@ -11,23 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 import "./glass-pill.css";
 
-export type GlassPillMetrics = {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-};
-
-export type GlassPillMoveOptions = {
-  first?: boolean;
-  instant?: boolean;
-  tracking?: boolean;
-};
-
-export type GlassPillIndicatorHandle = {
-  moveTo: (metrics: GlassPillMetrics, options?: GlassPillMoveOptions) => void;
-  hide: () => void;
-};
+export type { GlassPillIndicatorHandle, GlassPillMetrics, GlassPillMoveOptions };
 
 type GlassPillIndicatorProps = {
   reducedMotion: boolean;
