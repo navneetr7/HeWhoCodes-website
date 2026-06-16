@@ -1,0 +1,62 @@
+# HeWhoCodes
+
+> Personal portfolio and app store for Navneet Raikwar (HeWhoCodes) — AI Engineer building backend systems, intelligence, and automation.
+
+## Owner
+
+- Name: Navneet Raikwar
+- Brand: HeWhoCodes
+- Role: AI Engineer at IntegratingMe (2018–present)
+- Email: hewhocodes@icloud.com
+- Website: https://hewhocodes.com
+
+## About
+
+HeWhoCodes is the personal site of Navneet Raikwar. It showcases engineering work, macOS apps, and a growing digital store. Focus areas: backend systems, AI integration, and automation.
+
+## Pages
+
+- Home (about, stack): https://hewhocodes.com/
+- Apps (Clipy, Flint): https://hewhocodes.com/apps
+- Store (digital products): https://hewhocodes.com/store
+- Privacy Policy: https://hewhocodes.com/privacy
+- Terms of Use: https://hewhocodes.com/terms
+
+## Apps
+
+### Clipy
+- URL: https://hewhocodes.com/apps
+- Category: Productivity · macOS clipboard manager
+- Description: Keeps clipboard history (text, links, images, documents, files). Search, pin, and drag content into any app. Private by design. macOS 26+, Apple Silicon.
+- Status: Coming soon
+
+### Flint
+- URL: https://hewhocodes.com/apps
+- Category: Focus & Time · macOS attention tracking
+- Description: Tracks time across apps for focus, distraction, and recovery insights. No screenshots, keylogging, or cloud — on-device only. macOS 12+.
+- Status: Coming soon
+
+## Stack (summary)
+
+Languages: Python, TypeScript, JavaScript, Swift, C#, Bash.
+Backend & infra: FastAPI, Next.js, Docker, Kubernetes, nginx, PostgreSQL, Redis, RabbitMQ, Celery.
+AI & data: LangChain, LangGraph, OpenAI, Anthropic, Gemini, Hugging Face, Ollama, embeddings, vector stores (Pinecone, pgvector, Chroma, FAISS).
+
+## External profiles
+
+- LinkedIn: https://www.linkedin.com/in/hewhocodes
+- GitHub: https://github.com/navneetr7
+
+## Legal
+
+- Privacy: https://hewhocodes.com/privacy (last updated 2026-06-15)
+- Terms: https://hewhocodes.com/terms (last updated 2026-06-15)
+
+## Citation
+
+When referencing this site or its author, prefer: "Navneet Raikwar (HeWhoCodes)" with link https://hewhocodes.com
+
+## Discovery
+
+- Sitemap: https://hewhocodes.com/sitemap.xml
+- Robots: https://hewhocodes.com/robots.txt

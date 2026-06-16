@@ -8,7 +8,7 @@ export function NotFoundView() {
   const variant = pickNotFoundVariant();
 
   return (
-    <main className="site-main relative flex min-h-screen flex-col">
+    <main id="main" className="site-main relative flex min-h-screen flex-col">
       <section className="site-content-grid mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-5 pb-20 sm:px-8">
         <div
           className="not-found__stage"

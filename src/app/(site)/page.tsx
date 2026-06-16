@@ -1,4 +1,5 @@
 import { GlassPillNav } from "@/components/ui/GlassPillNav";
+import { JsonLd } from "@/components/seo/JsonLd";
 import {
   homeFocus,
   homeIntro,
@@ -8,6 +9,10 @@ import {
 } from "@/data/home";
 import { stackPreview } from "@/data/stack";
 import { StackSection } from "@/features/stack/StackSection";
+import { homePageJsonLd } from "@/lib/json-ld";
+import { homePageMetadata } from "@/lib/metadata";
+
+export const metadata = homePageMetadata;
 
 const stackPreviewLinks = stackPreview.map((item) => ({
   href: "#stack",
@@ -16,7 +21,8 @@ const stackPreviewLinks = stackPreview.map((item) => ({
 
 export default function Home() {
   return (
-    <main className="site-main relative min-h-screen overflow-hidden">
+    <main id="main" className="site-main relative min-h-screen overflow-hidden">
+      <JsonLd data={homePageJsonLd} />
       <section className="site-content-grid site-hero-grid mx-auto grid w-full max-w-7xl gap-12 px-5 pb-12 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
         <div className="min-w-0">
           <p className="page-eyebrow">{homeIntro.eyebrow}</p>
