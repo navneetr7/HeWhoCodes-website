@@ -66,7 +66,6 @@ export function Loader({ onComplete }: LoaderProps) {
     >
       <div className="relative h-full overflow-hidden">
         <div className="loader-atmosphere loader-background absolute inset-0" />
-        <div aria-hidden className="loader-blob loader-blob--live" />
         <div className="loader-frost absolute inset-0" />
         <div aria-live="polite" className="loader-progress">
           {progress}

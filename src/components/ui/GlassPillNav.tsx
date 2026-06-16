@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, type FocusEvent } from "react";
 import { GlassPillIndicator } from "@/components/ui/GlassPillIndicator";
 import { useGlassPillIndicator } from "@/hooks/useGlassPillIndicator";
 import { cn } from "@/lib/utils";
@@ -35,11 +35,17 @@ export function GlassPillNav({
   tailCluster = 0,
   "aria-label": ariaLabel,
 }: GlassPillNavProps) {
-  const { hide, indicatorRef, moveTo, moveToPointer, setNavRef, reducedMotion } =
+  const { handleMetricsChange, hide, indicatorRef, moveTo, moveToPointer, setNavRef, reducedMotion } =
     useGlassPillIndicator();
 
   const linkProps = (index: number) => ({
     className: "glass-clear-pill-link",
+    onBlur: (event: FocusEvent<HTMLElement>) => {
+      const nav = event.currentTarget.closest("nav");
+      if (nav && !nav.contains(event.relatedTarget as Node)) {
+        hide();
+      }
+    },
     onFocus: () => moveTo(index, { instant: instantIndicator }),
   });
 
@@ -118,7 +124,11 @@ export function GlassPillNav({
       onPointerLeave={hide}
       onPointerMove={(event) => trackPointer(event.clientX, event.clientY)}
     >
-      <GlassPillIndicator ref={indicatorRef} reducedMotion={reducedMotion} />
+      <GlassPillIndicator
+        ref={indicatorRef}
+        onMetricsChange={handleMetricsChange}
+        reducedMotion={reducedMotion}
+      />
 
       {scrollable ? (
         <div className="glass-clear-pill-scroll flex min-w-0 flex-1">{stack}</div>

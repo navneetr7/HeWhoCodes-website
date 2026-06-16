@@ -151,27 +151,11 @@ function measureFromPointer(nav: HTMLElement, clientX: number, clientY: number) 
   return { metrics: metricsList[closestIndex], activeIndex: closestIndex };
 }
 
-function measureIndicator(nav: HTMLElement): PillMetrics | null {
-  const track = nav.querySelector<HTMLElement>(".glass-clear-pill-track");
-  if (!track || track.getAttribute("data-visible") !== "true") return null;
-
-  const navRect = nav.getBoundingClientRect();
-  const trackRect = track.getBoundingClientRect();
-
-  return {
-    left: trackRect.left - navRect.left,
-    top: trackRect.top - navRect.top,
-    width: trackRect.width,
-    height: trackRect.height,
-  };
-}
-
-function updateNavCover(nav: HTMLElement) {
+function updateNavCoverFromMetrics(nav: HTMLElement, pill: PillMetrics) {
   const stack = nav.querySelector<HTMLElement>(".glass-clear-pill-stack");
   if (!stack) return;
 
-  const pill = measureIndicator(nav);
-  if (!pill || pill.width <= 0 || pill.height <= 0) {
+  if (pill.width <= 0 || pill.height <= 0) {
     stack.style.setProperty("--pill-cover-width", "0px");
     stack.style.setProperty("--pill-cover-height", "0px");
     return;
@@ -206,35 +190,17 @@ export function useGlassPillIndicator() {
     y: number;
     instant?: boolean;
   } | null>(null);
-  const coverFrameRef = useRef<number | null>(null);
   const reducedMotion = useSyncExternalStore(
     subscribeToMotionPreference,
     getReducedMotionPreference,
     getServerReducedMotionPreference,
   );
 
-  const stopCoverSync = useCallback(() => {
-    if (coverFrameRef.current !== null) {
-      window.cancelAnimationFrame(coverFrameRef.current);
-      coverFrameRef.current = null;
-    }
-  }, []);
+  const handleMetricsChange = useCallback((metrics: PillMetrics) => {
+    const nav = navRef.current;
+    if (!nav || indicatorHiddenRef.current) return;
 
-  const startCoverSync = useCallback(() => {
-    if (coverFrameRef.current !== null) return;
-
-    const loop = () => {
-      const nav = navRef.current;
-      if (!nav || indicatorHiddenRef.current) {
-        coverFrameRef.current = null;
-        return;
-      }
-
-      updateNavCover(nav);
-      coverFrameRef.current = window.requestAnimationFrame(loop);
-    };
-
-    coverFrameRef.current = window.requestAnimationFrame(loop);
+    updateNavCoverFromMetrics(nav, metrics);
   }, []);
 
   const moveTo = useCallback(
@@ -249,9 +215,8 @@ export function useGlassPillIndicator() {
       indicatorHiddenRef.current = false;
       activeIndexRef.current = index;
       indicatorRef.current?.moveTo(metrics, { first: isFirstShow, instant: options?.instant });
-      startCoverSync();
     },
-    [startCoverSync],
+    [],
   );
 
   const applyPointerPosition = useCallback(
@@ -270,9 +235,8 @@ export function useGlassPillIndicator() {
         instant: options?.instant,
         tracking: !isFirstShow && !options?.instant,
       });
-      startCoverSync();
     },
-    [startCoverSync],
+    [],
   );
 
   const moveToPointer = useCallback(
@@ -304,10 +268,9 @@ export function useGlassPillIndicator() {
       pointerFrameRef.current = null;
     }
 
-    stopCoverSync();
     if (nav) clearNavCover(nav);
     indicatorRef.current?.hide();
-  }, [stopCoverSync]);
+  }, []);
 
   const syncIndicator = useCallback(() => {
     const nav = navRef.current;
@@ -320,7 +283,6 @@ export function useGlassPillIndicator() {
 
       activeIndexRef.current = result.activeIndex;
       indicatorRef.current?.moveTo(result.metrics, { tracking: true });
-      startCoverSync();
       return;
     }
 
@@ -331,8 +293,7 @@ export function useGlassPillIndicator() {
     if (!metrics) return;
 
     indicatorRef.current?.moveTo(metrics, { tracking: true });
-    startCoverSync();
-  }, [startCoverSync]);
+  }, []);
 
   useEffect(() => {
     let resizeFrame: number | null = null;
@@ -350,9 +311,8 @@ export function useGlassPillIndicator() {
       window.removeEventListener("resize", onResize);
       if (resizeFrame !== null) window.cancelAnimationFrame(resizeFrame);
       if (pointerFrameRef.current !== null) window.cancelAnimationFrame(pointerFrameRef.current);
-      stopCoverSync();
     };
-  }, [syncIndicator, stopCoverSync]);
+  }, [syncIndicator]);
 
   const setNavRef = useCallback(
     (node: HTMLElement | null) => {
@@ -373,6 +333,7 @@ export function useGlassPillIndicator() {
   );
 
   return {
+    handleMetricsChange,
     hide,
     indicatorRef,
     moveTo,

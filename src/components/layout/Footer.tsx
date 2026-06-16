@@ -7,12 +7,12 @@ export function Footer() {
 
   return (
     <footer className="shell-footer w-full py-8" id="contact">
-      <div className="shell-footer__bar flex w-full items-center justify-between gap-4 text-sm text-foreground/45">
-        <p className="min-w-0 shrink-0">
+      <div className="shell-footer__bar flex w-full flex-col items-center gap-3 text-center text-sm text-foreground/45 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:text-left">
+        <p className="min-w-0">
           © {year} {site.owner}. All rights reserved.
         </p>
 
-        <GlassPillNav aria-label="Legal" items={[...footerLinks]} />
+        <GlassPillNav aria-label="Legal" className="shell-footer__legal-nav w-auto" items={[...footerLinks]} />
       </div>
     </footer>
   );
