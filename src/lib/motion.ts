@@ -2,6 +2,8 @@ export const loaderProgressStepMs = 20;
 export const loaderHoldAt100Ms = 500;
 export const loaderFadeOutMs = 500;
 export const scrambleStepMs = 58;
+export const brandScrambleHoldMs = 10_000;
+export const brandScrambleLeaveDelayMs = 10_000;
 
 export const glassPillSpringVisualDurationSec = 0.24;
 export const glassPillSpringBounce = 0.08;
