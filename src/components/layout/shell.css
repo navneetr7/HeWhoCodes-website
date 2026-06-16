@@ -67,6 +67,16 @@
   }
 }
 
+.site-main {
+  padding-top: 5.25rem;
+}
+
+@media (min-width: 640px) {
+  .site-main {
+    padding-top: 9rem;
+  }
+}
+
 .site-header {
   --pill-link-padding-block: 0.2rem;
   --pill-link-padding-inline: 0.38rem;

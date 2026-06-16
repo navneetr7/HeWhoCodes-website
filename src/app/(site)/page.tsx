@@ -16,7 +16,7 @@ const stackPreviewLinks = stackPreview.map((item) => ({
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-hidden pt-36">
+    <main className="site-main relative min-h-screen overflow-hidden">
       <section className="site-content-grid site-hero-grid mx-auto grid w-full max-w-7xl gap-12 px-5 pb-12 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end">
         <div className="min-w-0">
           <p className="page-eyebrow">{homeIntro.eyebrow}</p>
