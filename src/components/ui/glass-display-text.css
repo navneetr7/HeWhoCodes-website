@@ -1,0 +1,49 @@
+.glass-display__stage {
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.glass-display__title {
+  margin: 0;
+  max-width: 12ch;
+  font-size: clamp(3.5rem, 18vw, 13rem);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-align: center;
+  text-wrap: balance;
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--foreground) 94%, transparent) 0%,
+      color-mix(in srgb, var(--foreground) 36%, transparent) 46%,
+      color-mix(in srgb, var(--foreground) 78%, transparent) 100%
+    );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 18px rgba(0, 0, 0, 0.24))
+    drop-shadow(0 0 28px color-mix(in srgb, var(--foreground) 10%, transparent));
+}
+
+.glass-display__line {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .glass-display__title {
+    max-width: none;
+    font-size: clamp(5rem, 16vw, 16rem);
+  }
+}
+
+@media (min-width: 1100px) {
+  .glass-display__line {
+    display: inline;
+  }
+
+  .glass-display__line + .glass-display__line::before {
+    content: " ";
+  }
+}

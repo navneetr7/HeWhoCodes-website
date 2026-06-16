@@ -3,10 +3,10 @@ import "./store-section.css";
 
 export function StoreHorizon() {
   return (
-    <div className="store-horizon__stage">
-      <p className="store-horizon__title">
-        <span className="store-horizon__line">{storeHorizon.lineOne}</span>
-        <span className="store-horizon__line">{storeHorizon.lineTwo}</span>
+    <div className="store-horizon__stage glass-display__stage">
+      <p className="glass-display__title">
+        <span className="glass-display__line">{storeHorizon.lineOne}</span>
+        <span className="glass-display__line">{storeHorizon.lineTwo}</span>
       </p>
     </div>
   );

@@ -1,3 +1,5 @@
+@import "../../components/ui/glass-display-text.css";
+
 .store-horizon__stage {
   display: grid;
   place-items: center;
@@ -6,46 +8,12 @@
   margin-top: 2.5rem;
 }
 
-.store-horizon__title {
-  margin: 0;
-  max-width: 12ch;
+.store-horizon__stage .glass-display__title {
   font-size: clamp(4.5rem, 22vw, 13rem);
-  font-weight: 900;
-  line-height: 0.92;
-  letter-spacing: -0.03em;
-  text-align: center;
-  text-wrap: balance;
-  background:
-    linear-gradient(
-      165deg,
-      color-mix(in srgb, var(--foreground) 94%, transparent) 0%,
-      color-mix(in srgb, var(--foreground) 36%, transparent) 46%,
-      color-mix(in srgb, var(--foreground) 78%, transparent) 100%
-    );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 2px 18px rgba(0, 0, 0, 0.24))
-    drop-shadow(0 0 28px color-mix(in srgb, var(--foreground) 10%, transparent));
-}
-
-.store-horizon__line {
-  display: block;
 }
 
 @media (min-width: 768px) {
-  .store-horizon__title {
-    max-width: none;
+  .store-horizon__stage .glass-display__title {
     font-size: clamp(7rem, 18vw, 16rem);
-  }
-}
-
-@media (min-width: 1100px) {
-  .store-horizon__line {
-    display: inline;
-  }
-
-  .store-horizon__line + .store-horizon__line::before {
-    content: " ";
   }
 }
