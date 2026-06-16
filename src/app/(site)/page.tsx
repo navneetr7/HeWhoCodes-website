@@ -3,9 +3,9 @@ import { stackPreview } from "@/data/stack";
 import { StackSection } from "@/features/stack/StackSection";
 
 const profileLinks = [
-  { href: "https://www.linkedin.com/in/hewhocodes/", label: "LinkedIn" },
-  { href: "https://github.com/hewhocodes", label: "GitHub" },
-  { href: "mailto:hello@hewhocodes.com", label: "Email" },
+  { href: "https://www.linkedin.com/in/hewhocodes", label: "LinkedIn" },
+  { href: "https://github.com/navneetr7", label: "GitHub" },
+  { href: "mailto:hewhocodes@icloud.com", label: "Email" },
   { href: "/resume.pdf", label: "Resume" },
 ];
 
@@ -23,7 +23,7 @@ export default function Home() {
             Engineering useful things.
           </p>
 
-          <h1 className="max-w-4xl text-6xl font-black leading-none text-foreground sm:text-8xl lg:text-9xl">
+          <h1 className="max-w-4xl text-6xl font-black leading-none text-alpine-oat sm:text-8xl lg:text-9xl">
             Navneet
             <br />
             Raikwar

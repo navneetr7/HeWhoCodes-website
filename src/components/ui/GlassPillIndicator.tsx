@@ -1,8 +1,8 @@
 "use client";
 
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from "react";
 import type { AnimationPlaybackControls } from "motion/react";
-import { animate, motion, useMotionValue } from "motion/react";
+import { animate, motion, useMotionValue, useMotionValueEvent } from "motion/react";
 import {
   glassPillOpacityTransition,
   glassPillSpringTransition,
@@ -32,10 +32,11 @@ export type GlassPillIndicatorHandle = {
 type GlassPillIndicatorProps = {
   reducedMotion: boolean;
   className?: string;
+  onMetricsChange?: (metrics: GlassPillMetrics) => void;
 };
 
 export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPillIndicatorProps>(
-  function GlassPillIndicator({ reducedMotion, className }, ref) {
+  function GlassPillIndicator({ reducedMotion, className, onMetricsChange }, ref) {
     const trackRef = useRef<HTMLSpanElement>(null);
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -45,6 +46,7 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
     const opacity = useMotionValue(0);
     const layoutControlsRef = useRef<AnimationPlaybackControls[]>([]);
     const opacityControlRef = useRef<AnimationPlaybackControls | null>(null);
+    const metricsFrameRef = useRef<number | null>(null);
 
     const stopLayoutAnimations = () => {
       layoutControlsRef.current.forEach((control) => control.stop());
@@ -95,6 +97,37 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
       [height, scaleX, width, x, y],
     );
 
+    const emitMetrics = useCallback(() => {
+      onMetricsChange?.({
+        left: x.get(),
+        top: y.get(),
+        width: width.get(),
+        height: height.get(),
+      });
+    }, [height, onMetricsChange, width, x, y]);
+
+    const scheduleMetricsEmit = useCallback(() => {
+      if (!onMetricsChange || metricsFrameRef.current !== null) return;
+
+      metricsFrameRef.current = window.requestAnimationFrame(() => {
+        metricsFrameRef.current = null;
+        emitMetrics();
+      });
+    }, [emitMetrics, onMetricsChange]);
+
+    useMotionValueEvent(x, "change", scheduleMetricsEmit);
+    useMotionValueEvent(y, "change", scheduleMetricsEmit);
+    useMotionValueEvent(width, "change", scheduleMetricsEmit);
+    useMotionValueEvent(height, "change", scheduleMetricsEmit);
+
+    useEffect(() => {
+      return () => {
+        if (metricsFrameRef.current !== null) {
+          window.cancelAnimationFrame(metricsFrameRef.current);
+        }
+      };
+    }, []);
+
     useImperativeHandle(
       ref,
       () => ({
@@ -105,6 +138,7 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
             stopAnimations();
             applyLayout(metrics);
             opacity.set(1);
+            emitMetrics();
             return;
           }
 
@@ -113,6 +147,7 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
             applyLayout(metrics);
             opacity.set(0);
             opacityControlRef.current = animate(opacity, 1, glassPillOpacityTransition);
+            emitMetrics();
             return;
           }
 
@@ -126,6 +161,11 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
           stopAnimations();
           setVisible(false);
 
+          if (metricsFrameRef.current !== null) {
+            window.cancelAnimationFrame(metricsFrameRef.current);
+            metricsFrameRef.current = null;
+          }
+
           if (reducedMotion) {
             opacity.set(0);
             return;
@@ -134,7 +174,7 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
           opacityControlRef.current = animate(opacity, 0, glassPillOpacityTransition);
         },
       }),
-      [animateLayout, applyLayout, height, opacity, reducedMotion, scaleX, width, x, y],
+      [animateLayout, applyLayout, emitMetrics, height, opacity, reducedMotion, scaleX, width, x, y],
     );
 
     return (

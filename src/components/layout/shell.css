@@ -25,28 +25,6 @@
     auto;
   mask-image: radial-gradient(ellipse 90% 80% at 50% 34%, #000 12%, transparent 78%);
   opacity: 0.56;
-  transform: translate3d(0, 0, 0);
-  animation: site-shell-atmosphere-drift 42s ease-in-out infinite alternate;
-}
-
-@keyframes site-shell-atmosphere-drift {
-  from {
-    background-position:
-      0 0,
-      0 0,
-      center,
-      center;
-    transform: translate3d(-1%, -0.5%, 0) scale(1);
-  }
-
-  to {
-    background-position:
-      1.8rem 1.2rem,
-      -1.2rem 1.8rem,
-      center,
-      center;
-    transform: translate3d(1%, 0.5%, 0) scale(1.02);
-  }
 }
 
 .shell-footer {
@@ -55,6 +33,22 @@
 
 .shell-footer__bar {
   padding-inline: 1.25rem;
+}
+
+.shell-footer__bar .glass-clear-pill-nav,
+.shell-footer__bar .glass-clear-pill-stack {
+  width: auto;
+  flex: none;
+}
+
+@media (max-width: 639px) {
+  .shell-footer__legal-nav {
+    justify-content: center;
+  }
+
+  .shell-footer__legal-nav .glass-clear-pill-layer {
+    justify-content: center;
+  }
 }
 
 .shell-divider {
@@ -88,6 +82,12 @@
   min-width: 0;
   max-width: 100%;
   overflow: hidden;
+}
+
+@media (max-width: 639px) {
+  .site-header__nav {
+    margin-inline-start: 0.75rem;
+  }
 }
 
 @media (min-width: 640px) {
@@ -128,8 +128,4 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .site-shell__atmosphere {
-    animation: none;
-  }
-}
+

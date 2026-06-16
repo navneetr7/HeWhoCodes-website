@@ -3,7 +3,7 @@
 :root {
   --background: #080907;
   --foreground: #f8f4ec;
-  --color-alpine-oat: #f0e7da;
+  --alpine-oat: #e5d5b5;
   --color-ink: #080907;
   --color-graphite: #11130f;
   --color-teal: #00e0c2;
@@ -47,7 +47,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-alpine-oat: var(--color-alpine-oat);
+  --color-alpine-oat: var(--alpine-oat);
   --color-graphite: var(--color-graphite);
   --color-teal: var(--color-teal);
   --color-teal-dark: var(--color-teal-dark);
