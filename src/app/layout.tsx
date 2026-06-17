@@ -1,6 +1,7 @@
 import "@fontsource-variable/space-grotesk";
 import type { Viewport } from "next";
 import { SiteLoader } from "@/components/brand/SiteLoader";
+import { getLoaderBootstrapScript } from "@/lib/loaderSession";
 import { defaultSiteMetadata } from "@/lib/metadata";
 import "./globals.css";
 import "./palette.css";
@@ -19,9 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className="h-full antialiased" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: getLoaderBootstrapScript() }} />
+      </head>
       <body className="min-h-full" suppressHydrationWarning>
         <SiteLoader />
-        {children}
+        <div data-site-shell>{children}</div>
       </body>
     </html>
   );

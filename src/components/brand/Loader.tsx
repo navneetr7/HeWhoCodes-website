@@ -54,6 +54,7 @@ export function Loader({ onComplete }: LoaderProps) {
 
   return (
     <div
+      data-site-loader
       aria-hidden={complete}
       aria-label="Loading site"
       aria-valuemax={100}

@@ -13,6 +13,7 @@
   --copper: #61413c;
   --banan-yellow: #d0ff00;
   --electric-lime: #bfff00;
+  --hero-name: #fceec9;
 
   /* Store + 404 accent — change this one line to try a new color */
   --store-accent: #bfff00;
@@ -78,6 +79,7 @@
   --color-copper: var(--copper);
   --color-banan-yellow: var(--banan-yellow);
   --color-electric-lime: var(--electric-lime);
+  --color-hero-name: var(--hero-name);
   --color-graphite: var(--graphite);
   --color-teal: var(--teal);
   --color-teal-dark: var(--teal-dark);
@@ -93,6 +95,10 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+html.loader-pending [data-site-shell] {
+  visibility: hidden;
 }
 
 html {

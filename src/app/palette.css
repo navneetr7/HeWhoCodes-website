@@ -30,3 +30,7 @@
 .text-electric-lime {
   color: var(--electric-lime);
 }
+
+.text-hero-name {
+  color: var(--hero-name);
+}

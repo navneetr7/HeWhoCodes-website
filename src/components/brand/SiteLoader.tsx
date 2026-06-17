@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { Loader } from "@/components/brand/Loader";
-import { markLoaderComplete, shouldPlayLoader } from "@/lib/loaderSession";
+import { clearLoaderPending, markLoaderComplete, shouldPlayLoader } from "@/lib/loaderSession";
 import {
   getReducedMotionPreference,
   getServerReducedMotionPreference,
@@ -33,8 +33,15 @@ export function SiteLoader() {
   useEffect(() => {
     if (reducedMotion) {
       markLoaderComplete();
+      clearLoaderPending();
     }
   }, [reducedMotion]);
+
+  useEffect(() => {
+    if (!shouldShow) {
+      clearLoaderPending();
+    }
+  }, [shouldShow]);
 
   if (!shouldShow || dismissed || reducedMotion) return null;
 
@@ -42,6 +49,7 @@ export function SiteLoader() {
     <Loader
       onComplete={() => {
         markLoaderComplete();
+        clearLoaderPending();
         setDismissed(true);
       }}
     />

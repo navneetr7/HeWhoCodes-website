@@ -27,7 +27,7 @@ export default function Home() {
         <div className="min-w-0">
           <p className="page-eyebrow">{homeIntro.eyebrow}</p>
 
-          <h1 className="max-w-4xl text-6xl font-black leading-none text-alpine-oat sm:text-8xl lg:text-9xl">
+          <h1 className="max-w-4xl text-6xl font-black leading-none text-hero-name sm:text-8xl lg:text-9xl">
             {homeIntro.nameLines[0]}
             <br />
             {homeIntro.nameLines[1]}
