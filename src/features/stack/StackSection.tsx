@@ -21,8 +21,9 @@ export function StackSection() {
       <div className="stack-section__groups min-w-0">
         {stackCategories.map((category) => (
           <article key={category.title} className="stack-section__group">
-            <h3 className="stack-section__category font-mono text-xs font-bold uppercase tracking-[0.2em]">
-              {category.title}
+            <h3 className="stack-section__category">
+              <span className="stack-section__category-name">{category.title}</span>
+              <span className="stack-section__category-count"> ({category.items.length})</span>
             </h3>
             <ul className="stack-section__items">
               {category.items.map((item) => (

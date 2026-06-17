@@ -29,7 +29,7 @@ export const stackCategories: StackCategory[] = [
     ],
   },
   {
-    title: "Frontend & Applications",
+    title: "Frontend",
     items: [
       { name: "React", icon: "/react-svgrepo-com.svg" },
       { name: "Next.js", icon: "/next-js-svgrepo-com.svg", invertIcon: true },
@@ -39,7 +39,7 @@ export const stackCategories: StackCategory[] = [
     ],
   },
   {
-    title: "Backend & Systems",
+    title: "Backend",
     items: [
       { name: "FastAPI", icon: "/FastAPI.svg" },
       { name: "WebSockets", icon: "/websocket-svgrepo-com.svg", invertIcon: true },
@@ -51,7 +51,7 @@ export const stackCategories: StackCategory[] = [
     ],
   },
   {
-    title: "AI & LLM Systems",
+    title: "AI & Data",
     items: [
       { name: "RAG Pipelines", icon: "/Rag--Streamline-Carbon.svg", invertIcon: true },
       { name: "AI Agents", icon: "/software-agent.png" },
@@ -63,7 +63,7 @@ export const stackCategories: StackCategory[] = [
     ],
   },
   {
-    title: "Models & Frameworks",
+    title: "Models",
     items: [
       { name: "LangChain", icon: "/langchain-color.svg" },
       { name: "LangGraph", icon: "/langgraph-color.svg" },
@@ -75,7 +75,7 @@ export const stackCategories: StackCategory[] = [
     ],
   },
   {
-    title: "Databases & Vector Search",
+    title: "Databases",
     items: [
       { name: "SQL", icon: "/sql-database-generic-svgrepo-com.svg", invertIcon: true },
       { name: "PostgreSQL", icon: "/postgresql-logo-svgrepo-com.svg" },
@@ -88,7 +88,7 @@ export const stackCategories: StackCategory[] = [
     ],
   },
   {
-    title: "Infrastructure & DevOps",
+    title: "Infrastructure",
     items: [
       { name: "Docker", icon: "/stack/docker.svg" },
       { name: "Kubernetes", icon: "/stack/kubernetes.svg" },
