@@ -1,5 +1,6 @@
 import "@fontsource-variable/space-grotesk";
 import type { Viewport } from "next";
+import { headers } from "next/headers";
 import { SiteLoader } from "@/components/brand/SiteLoader";
 import { getLoaderBootstrapScript } from "@/lib/loaderSession";
 import { defaultSiteMetadata } from "@/lib/metadata";
@@ -13,15 +14,17 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const nonce = (await headers()).get("x-nonce") ?? "";
+
   return (
     <html lang="en" data-scroll-behavior="smooth" className="h-full antialiased" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: getLoaderBootstrapScript() }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: getLoaderBootstrapScript() }} />
       </head>
       <body className="min-h-full" suppressHydrationWarning>
         <SiteLoader />
