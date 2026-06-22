@@ -1,7 +1,5 @@
 import { unstable_noStore as noStore } from "next/cache";
-import "@/components/ui/glass-display-text.css";
 import { pickNotFoundVariant } from "@/data/not-found";
-import "./not-found.css";
 
 export function NotFoundView() {
   noStore();

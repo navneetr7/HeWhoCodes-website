@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "../components/ui/glass-display-text.css";
+@import "../features/not-found/not-found.css";
 
 :root {
   --background: #080907;
