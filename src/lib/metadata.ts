@@ -105,7 +105,7 @@ export const termsPageDescription = `Terms for using ${site.domain} and purchasi
 
 export const appsPageMetadata: Metadata = buildPageMetadata({
   title: `Apps · ${site.name}`,
-  description: `macOS apps and projects by ${site.brandHoverName} — Clipy clipboard manager and Flint attention tracking.`,
+  description: `macOS apps and projects by ${site.brandHoverName} — CopyDock clipboard manager and Flint attention tracking.`,
   path: "/apps",
 });
 

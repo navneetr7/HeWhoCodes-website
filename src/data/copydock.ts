@@ -1,10 +1,10 @@
 import type { AppShowcaseData } from "@/features/apps/types";
 
-export const clipyShowcase: AppShowcaseData = {
-  name: "Clipy",
+export const copyDockShowcase: AppShowcaseData = {
+  name: "CopyDock",
   subtitle: "Clipboard manager for macOS",
   description:
-    "Clipy keeps everything you copy within reach — text, links, images, documents, and files. Search instantly, pin what matters, and drag content directly into any app.",
+    "CopyDock keeps everything you copy within reach — text, links, images, documents, and files. Search instantly, pin what matters, and drag content directly into any app.",
   category: "Productivity",
   badges: ["macOS 26+", "Apple Silicon"],
   highlightsHeading: "At a glance",
@@ -19,6 +19,6 @@ export const clipyShowcase: AppShowcaseData = {
   previewAccent: "var(--teal)",
   actions: {
     primary: { label: "Coming soon", href: "#", disabled: true },
-    secondary: { label: "Learn more", href: "mailto:hewhocodes@icloud.com?subject=Clipy" },
+    secondary: { label: "Learn more", href: "mailto:hewhocodes@icloud.com?subject=CopyDock" },
   },
 };

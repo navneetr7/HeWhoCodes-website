@@ -17,14 +17,14 @@ HeWhoCodes is the personal site of Navneet Raikwar. It showcases engineering wor
 ## Pages
 
 - Home (about, stack): https://hewhocodes.com/
-- Apps (Clipy, Flint): https://hewhocodes.com/apps
+- Apps (CopyDock, Flint): https://hewhocodes.com/apps
 - Store (digital products): https://hewhocodes.com/store
 - Privacy Policy: https://hewhocodes.com/privacy
 - Terms of Use: https://hewhocodes.com/terms
 
 ## Apps
 
-### Clipy
+### CopyDock
 - URL: https://hewhocodes.com/apps
 - Category: Productivity · macOS clipboard manager
 - Description: Keeps clipboard history (text, links, images, documents, files). Search, pin, and drag content into any app. Private by design. macOS 26+, Apple Silicon.

@@ -1,4 +1,4 @@
-import { clipyShowcase } from "@/data/cliply";
+import { copyDockShowcase } from "@/data/copydock";
 import { flintShowcase } from "@/data/flint";
 
 export const appsIntro = {
@@ -6,4 +6,4 @@ export const appsIntro = {
   title: "Apps",
 };
 
-export const appShowcases = [clipyShowcase, flintShowcase] as const;
+export const appShowcases = [copyDockShowcase, flintShowcase] as const;
