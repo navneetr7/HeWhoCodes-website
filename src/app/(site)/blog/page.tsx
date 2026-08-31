@@ -36,7 +36,9 @@ export default async function BlogPage() {
             </GlassPanel>
           ))
         ) : (
-          <p className="font-mono text-sm text-[var(--text-muted-body)]">Nothing published yet.</p>
+          <p className="py-24 text-center font-mono text-sm text-[var(--text-muted-body)]">
+            Nothing useful yet.
+          </p>
         )}
       </div>
     </ContentPage>

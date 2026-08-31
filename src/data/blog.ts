@@ -1,4 +1,4 @@
 export const blogIntro = {
   eyebrow: "Blog",
-  title: "Writing.",
+  title: "Articles",
 } as const;
