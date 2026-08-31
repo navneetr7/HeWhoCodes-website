@@ -39,6 +39,11 @@ else
   git clone "${REPO_URL}" "${APP_DIR}"
 fi
 
+echo "==> Preparing persistent blog media"
+install -d -m 0750 -o 1001 -g 1001 \
+  /var/lib/hewhocodes/blog-media/staging \
+  /var/lib/hewhocodes/blog-media/production
+
 echo "==> Configuring nginx"
 install -m 644 "${APP_DIR}/scripts/server/nginx/hewhocodes.com.conf" \
   /etc/nginx/sites-available/hewhocodes.com

@@ -8,6 +8,7 @@ const routeLastModified: Record<string, string> = {
   "/": site.contentUpdated,
   "/apps": site.contentUpdated,
   "/store": site.contentUpdated,
+  "/blog": site.contentUpdated,
   "/privacy": legal.privacyUpdated,
   "/terms": legal.termsUpdated,
 };

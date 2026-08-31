@@ -37,20 +37,20 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
     const opacityControlRef = useRef<AnimationPlaybackControls | null>(null);
     const metricsFrameRef = useRef<number | null>(null);
 
-    const stopLayoutAnimations = () => {
+    const stopLayoutAnimations = useCallback(() => {
       layoutControlsRef.current.forEach((control) => control.stop());
       layoutControlsRef.current = [];
-    };
+    }, []);
 
-    const stopOpacityAnimation = () => {
+    const stopOpacityAnimation = useCallback(() => {
       opacityControlRef.current?.stop();
       opacityControlRef.current = null;
-    };
+    }, []);
 
-    const stopAnimations = () => {
+    const stopAnimations = useCallback(() => {
       stopLayoutAnimations();
       stopOpacityAnimation();
-    };
+    }, [stopLayoutAnimations, stopOpacityAnimation]);
 
     const setVisible = (visible: boolean) => {
       trackRef.current?.setAttribute("data-visible", visible ? "true" : "false");
@@ -83,7 +83,7 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
           animate(height, metrics.height, spring),
         ];
       },
-      [height, scaleX, width, x, y],
+      [height, scaleX, stopLayoutAnimations, width, x, y],
     );
 
     const emitMetrics = useCallback(() => {
@@ -163,7 +163,7 @@ export const GlassPillIndicator = forwardRef<GlassPillIndicatorHandle, GlassPill
           opacityControlRef.current = animate(opacity, 0, glassPillOpacityTransition);
         },
       }),
-      [animateLayout, applyLayout, emitMetrics, height, opacity, reducedMotion, scaleX, width, x, y],
+      [animateLayout, applyLayout, emitMetrics, opacity, reducedMotion, stopAnimations],
     );
 
     return (

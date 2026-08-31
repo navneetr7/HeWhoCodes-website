@@ -115,6 +115,12 @@ export const storePageMetadata: Metadata = buildPageMetadata({
   path: "/store",
 });
 
+export const blogPageMetadata: Metadata = buildPageMetadata({
+  title: `Blog · ${site.name}`,
+  description: `Articles and notes by ${site.brandHoverName}.`,
+  path: "/blog",
+});
+
 export const notFoundPageMetadata: Metadata = buildPageMetadata({
   title: `Page not found · ${site.name}`,
   description: `The page you requested on ${site.domain} does not exist.`,

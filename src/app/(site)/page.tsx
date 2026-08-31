@@ -8,6 +8,7 @@ import {
   stackPreviewLabel,
 } from "@/data/home";
 import { stackPreview } from "@/data/stack";
+import { GitHubActivity } from "@/features/github/GitHubActivity";
 import { StackSection } from "@/features/stack/StackSection";
 import { homePageJsonLd } from "@/lib/json-ld";
 import { homePageMetadata } from "@/lib/metadata";
@@ -69,6 +70,7 @@ export default function Home() {
         </aside>
       </section>
 
+      <GitHubActivity />
       <StackSection />
     </main>
   );

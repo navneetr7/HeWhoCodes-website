@@ -68,6 +68,11 @@
   --loader-frost-blur: 14px;
   --border-subtle: color-mix(in srgb, var(--foreground) 10%, transparent);
   --border-divider: color-mix(in srgb, var(--foreground) 18%, transparent);
+  --github-level-0: #161b22;
+  --github-level-1: #0e4429;
+  --github-level-2: #006d32;
+  --github-level-3: #26a641;
+  --github-level-4: #39d353;
 }
 
 @theme inline {

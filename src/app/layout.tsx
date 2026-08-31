@@ -24,7 +24,11 @@ export default async function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth" className="h-full antialiased" suppressHydrationWarning>
       <head>
-        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: getLoaderBootstrapScript() }} />
+        <script
+          nonce={nonce}
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: getLoaderBootstrapScript() }}
+        />
       </head>
       <body className="min-h-full" suppressHydrationWarning>
         <SiteLoader />
